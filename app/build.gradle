@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+//这里是要输入的路径
+    def outputPathName = "E:\\zleap\\Filemanage\\lelo\\host\\src\\main\\assets\\lelo.apk"
+//这是应用编译完成
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            //开始输出
+            output.outputFile = new File(outputPathName)
+        }
+    }
+
+
+    defaultConfig {
+        applicationId "com.bolin.lelo"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    retrolambda {
+        // 官方建議使用環境變數，不過我這邊路經都回傳 null
+        //jdk System.getenv("JAVA8_HOME")
+        //oldJdk System.getenv("JAVA6_HOME")
+        //下列是我 mac java7 及 java8 的相對路徑
+        jdk 'D:\\Program Files\\Java\\jdk1.8.0_101'
+        oldJdk 'D:\\Program Files\\Java\\jdk1.7.0_79'
+        javaVersion JavaVersion.VERSION_1_7
+        jvmArgs '-noverify'
+        defaultMethods false
+        incremental true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+
+
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+
+
+    compile 'com.orhanobut:logger:1.15'
+    compile 'com.zhy:percent-support-extends:1.1.1'
+    compile 'com.balysv:material-ripple:1.0.2'
+    compile 'com.android.support:appcompat-v7:24.0.0-alpha1'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
+
+}
