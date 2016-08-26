@@ -161,7 +161,7 @@ public class mainFrag extends baseFrag{
             }
         }
         if(event.getAction()==MotionEvent.ACTION_UP){
-            new Handler().postDelayed(() -> {
+
                 if (positionlist.size() >= 2) {
                     if (Math.abs(positionlist.get(positionlist.size() - 1)[1]) > mainrlt.getWidth() / 2) {
                         //  Logger.v("-      删除  fragment    -");
@@ -169,18 +169,21 @@ public class mainFrag extends baseFrag{
                         EventBus.getDefault().post(new showDelImg(false));   //  发送消息
                         new Handler().postDelayed(() -> {
                             EventBus.getDefault().post(new deleteFragEvent(getFragTag()));   //  发送消息
+
+                            for (int i = positionlist.size() - 1; i >= 0; i--) {
+                                mainrlt.layout(positionlist.get(i)[0], positionlist.get(i)[1], positionlist.get(i)[2], positionlist.get(i)[3]);
+                            }
+                            mainrlt.layout(0, 0, mainrlt.getWidth(), mainrlt.getHeight());
+                            if (positionlist.size() < 2) {
+                                //放大或者缩小fragment
+                                EventBus.getDefault().post(new fragEvent(getFragTag()));   //  发送消息
+                            }
                         }, 200);
                     }
                 }
-                for (int i = positionlist.size() - 1; i >= 0; i--) {
-                    mainrlt.layout(positionlist.get(i)[0], positionlist.get(i)[1], positionlist.get(i)[2], positionlist.get(i)[3]);
-                }
-                mainrlt.layout(0, 0, mainrlt.getWidth(), mainrlt.getHeight());
-                if (positionlist.size() < 2) {
-                    //放大或者缩小fragment
-                    EventBus.getDefault().post(new fragEvent(getFragTag()));   //  发送消息
-                }
-            }, 50);
+
+
+
 
         }
 
