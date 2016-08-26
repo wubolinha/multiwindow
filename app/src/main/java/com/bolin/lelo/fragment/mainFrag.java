@@ -174,14 +174,13 @@ public class mainFrag extends baseFrag{
                                 mainrlt.layout(positionlist.get(i)[0], positionlist.get(i)[1], positionlist.get(i)[2], positionlist.get(i)[3]);
                             }
                             mainrlt.layout(0, 0, mainrlt.getWidth(), mainrlt.getHeight());
-                            if (positionlist.size() < 2) {
-                                //放大或者缩小fragment
-                                EventBus.getDefault().post(new fragEvent(getFragTag()));   //  发送消息
-                            }
+
                         }, 200);
                     }
-                }
-
+                }else {
+                //放大或者缩小fragment
+                EventBus.getDefault().post(new fragEvent(getFragTag()));   //  发送消息
+            }
 
 
 
